@@ -29,7 +29,7 @@ def gerar_num_matricula():
     return matricula
 
 def visualizar_lista_alunos():
-    print("\nLista de alunos cadastrados:")
+    print("Lista de alunos cadastrados:")
     for aluno in alunos:
         print(f"{aluno['nome']} - Matrícula: {aluno['matricula']}")
 
