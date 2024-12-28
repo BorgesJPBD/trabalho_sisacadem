@@ -26,16 +26,45 @@ def buscar_alunos(codigos_alunos):
                 break
     return alunos_encontrados
 
-def gerar_codigo_turma():
-    return random.randint(1000, 9999)
-
 def cadastro_turma():
-    codigo_turma = gerar_codigo_turma()
-    print("Escolha a disciplina para a turma:")
-    for disciplina in disciplinas:
-        print(f"Código: {disciplina['código']} - {disciplina['Nome_Disciplina']}")
-        codigo_disciplina = int(input("Digite o código da disciplina: "))
+    nome_turma = input("Digite o nome da turma: ")
+    codigo_disciplina = int(input("Digite o código da disciplina: "))
+    disciplina = buscar_disciplina(codigo_disciplina)
+    if not disciplina:
         print("Disciplina não encontrada.")
         return
+
+    codigo_professor = int(input("Digite o código do professor: "))
+    professor = buscar_professor(codigo_professor)
+    if not professor:
+        print("Professor não encontrado.")
+        return
+
+    codigos_alunos = input("Digite os códigos dos alunos separados por vírgula: ").split(',')
+    codigos_alunos = [int(codigo.strip()) for codigo in codigos_alunos]
+    alunos_turma = buscar_alunos(codigos_alunos)
+    if len(alunos_turma) != len(codigos_alunos):
+        print("Um ou mais alunos não foram encontrados.")
+        return
+
+    codigo_turma = random.randint(1000, 9999)
+    turma = {
+        'codigo_turma': codigo_turma,
+        'nome_turma': nome_turma,
+        'disciplina': disciplina,
+        'professor': professor,
+        'alunos': alunos_turma
+    }
+
+    turmas.append(turma)
+    print(f"Turma cadastrada com sucesso! Código da turma: {codigo_turma}")
+
+cadastro_turma()
+
+   
+   
+
     
-    print(f"Disciplina selecionada: {disciplina['Nome_Disciplina']} (Código: {disciplina['código']})")
+    
+    
+    

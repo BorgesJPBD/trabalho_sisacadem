@@ -1,40 +1,53 @@
-
 import random  
+
 disciplinas = []  
 
 def listar_disciplinas():
-    if not disciplinas:
-        print("Nenhuma disciplina cadastrada.")
-    else:
+    if disciplinas:
         print("Disciplinas cadastradas:")
-        for disciplina in disciplinas:
+        for disciplina in disciplinas: 
             print(f"Nome: {disciplina['Nome_Disciplina']}, Código: {disciplina['código']}")
+    else:
+        print("Nenhuma disciplina cadastrada.")
 
 def cadastro_disciplina():
-    Nome_Disciplina = input("Escreva o nome da disciplina: ")
-    carga_curricular = input("Qual a carga curricular dessa disciplina? ")
-    professor_docente = input("Nome do Professor responsável pela disciplina: ")
+    NomeDisciplina = input("Escreva o nome da disciplina: ")
+    CargaCurricular = input("Qual a carga curricular dessa disciplina? ")
+    professorDocente = input("Nome do Professor responsável pela disciplina: ")
 
     código = random.randint(1000, 9999)  
     
     disciplina = {
-        "Nome_Disciplina": Nome_Disciplina,
+        "NomeDisciplina": NomeDisciplina,
         "código": código,
-        "carga_curricular": carga_curricular,
-        "professor_docente": professor_docente,
+        "CargaCurricular": CargaCurricular,
+        "ProfessorDocente": professorDocente,
     }
 
     disciplinas.append(disciplina)
     print(f"Disciplina cadastrada com sucesso! Código gerado: {código}")
     print(f"Disciplina cadastrada: {disciplina}")
+    
+def listar_disciplinas():
+    print("Lista de disciplinas cadastradas:")
+    for disciplina in disciplinas:
+        print(f"Nome: {disciplina['NomeDisciplina']}, Código: {disciplina['código']}, Carga Curricular: {disciplina['CargaCurricular']}, Professor: {disciplina['ProfessorDocente']}")
 
-print("1. Cadastrar nova disciplina")
-print("2. Listar disciplinas cadastradas")
-opcao = input("Escolha uma opção: ")
+def menu():
+    while True:
+        print("\nMenu:")
+        print("1. Cadastrar nova disciplina")
+        print("2. Listar disciplinas cadastradas")
+        print("3. Sair")
+        opcao = input("Escolha uma opção: ")
 
-if opcao == "1":
-    cadastro_disciplina()
-elif opcao == "2":
-    listar_disciplinas()
-else:
-    print("Opção inválida.")
+        if opcao == "1":
+            cadastro_disciplina()
+        elif opcao == "2":
+            listar_disciplinas()
+        elif opcao == "3":
+            print("Saindo...")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+menu()
