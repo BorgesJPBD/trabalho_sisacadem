@@ -34,25 +34,7 @@ def visualizar_lista_alunos():
         print(f"{aluno['nome']} - Matrícula: {aluno['matricula']}")
 
 
-def menu():
-     while True:
-        print("\nMenu:")
-        print("1. Cadastrar novo aluno")
-        print("2. Visualizar alunos cadastrados")
-        print("3. Sair")
-        opcao = input("Escolha uma opção: ")
 
-        if opcao == "1":
-            cadastro_alunos()
-        elif opcao == "2":
-            visualizar_lista_alunos()
-        elif opcao == "3":
-            print("Saindo...")
-            break
-        else:
-            print("Opção inválida. Tente novamente.")
-if __name__ == "__main__":
-     menu()
 
 
 

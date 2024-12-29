@@ -35,25 +35,5 @@ def listar_professores():
     for professor in professores:
         print(f"ID: {professor['id']}, Nome: {professor['nome']}, Disciplina: {professor['disciplina']}, Data de Nascimento: {professor['data_nascimento']}, Sexo: {professor['sexo']}, Endereço: {professor['endereco']}, Telefone: {professor['telefone']}, Email: {professor['email']}")
 
-def menu():
-    while True:
-        print("\nMenu:")
-        print("1. Cadastrar novo professor")
-        print("2. Listar professores cadastrados")
-        print("3. Sair")
-        opcao = input("Escolha uma opção: ")
-
-        if opcao == "1":
-            cadastro_professor()
-        elif opcao == "2":
-            listar_professores()
-        elif opcao == "3":
-            print("Saindo...")
-            break
-        else:
-            print("Opção inválida. Tente novamente.")
-            
-if __name__ == "__main__":
-    menu()
     
     

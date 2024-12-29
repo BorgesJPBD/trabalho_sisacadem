@@ -33,24 +33,4 @@ def listar_disciplinas():
     for disciplina in disciplinas:
         print(f"Nome: {disciplina['NomeDisciplina']}, Código: {disciplina['código']}, Carga Curricular: {disciplina['CargaCurricular']}, Professor: {disciplina['ProfessorDocente']}")
 
-def menu():
-    while True:
-        print("\nMenu:")
-        print("1. Cadastrar nova disciplina")
-        print("2. Listar disciplinas cadastradas")
-        print("3. Sair")
-        opcao = input("Escolha uma opção: ")
 
-        if opcao == "1":
-            cadastro_disciplina()
-        elif opcao == "2":
-            listar_disciplinas()
-        elif opcao == "3":
-            print("Saindo...")
-            break
-        else:
-            print("Opção inválida. Tente novamente.")
-            
-if __name__ == "__main__":
-    
-    menu()

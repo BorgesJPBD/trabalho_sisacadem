@@ -67,32 +67,13 @@ def listar_turmas():
         for aluno in turma['alunos']:
             print(f"  {aluno['nome']} - Matrícula: {aluno['matricula']}")
 
-def menu():
-    while True:
-        print("\nMenu:")
-        print("1. Cadastrar nova turma")
-        print("2. Listar turmas cadastradas")
-        print("3. Sair")
-        opcao = input("Escolha uma opção: ")
-
-        if opcao == "1":
-            cadastro_turma()
-        elif opcao == "2":
-            listar_turmas()
-        elif opcao == "3":
-            print("Saindo...")
-            break
-        else:
-            print("Opção inválida. Tente novamente.")
-            
 if __name__ == "__main__":
-
-    menu()
-
-   
-   
-
     
+    while True:
+        cadastro_turma()
+        continuar = input("Deseja cadastrar outra turma? (s/n): ").strip().lower()
+        if continuar != 's':  
+            break
+    print("Turmas cadastradas")
     
-    
-    
+    listar_turmas()
