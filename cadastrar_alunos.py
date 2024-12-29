@@ -32,6 +32,19 @@ def visualizar_lista_alunos():
     print("Lista de alunos cadastrados:")
     for aluno in alunos:
         print(f"{aluno['nome']} - Matrícula: {aluno['matricula']}")
+        
+def excluir_aluno():
+    matricula = int(input("Digite a matrícula do aluno a ser excluído: "))
+    aluno_encontrado = False
+    for aluno in alunos:
+        if aluno['matricula'] == matricula:
+            alunos.remove(aluno)
+            aluno_encontrado = True
+            print(f"Aluno com matrícula {matricula} excluído com sucesso.")
+            break
+    if not aluno_encontrado:
+        print("Aluno não encontrado.")        
+    
 
 
 
