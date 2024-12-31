@@ -1,6 +1,6 @@
 from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_aluno
-from cadastrar_professor import cadastro_professor, listar_professores
-from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas
+from cadastrar_professor import cadastro_professor, listar_professores , professores
+from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas ,  disciplinas
 from cadastrar_turmas import cadastro_turma, listar_turmas
 
 def exibir_menu():
@@ -58,8 +58,25 @@ def sair():
     exit()
 
 def inserir_professor_em_disciplina():
-  
-    print("Inserir professor em disciplina ainda não implementado.")
+    
+    listar_disciplinas()
+    codigo_disciplina = int(input("Digite o código da disciplina: "))
+    disciplina = next((d for d in disciplinas if d['código'] == codigo_disciplina), None)
+    if not disciplina:
+        print("Disciplina não encontrada.")
+        return
+
+    listar_professores()
+    codigo_professor = int(input("Digite o código do professor: "))
+    professor = next((p for p in professores if p['id'] == codigo_professor), None)
+    if not professor:
+        print("Professor não encontrado.")
+        return
+
+    disciplina['ProfessorDocente'] = professor
+    print(f"Professor {professor['nome']} inserido na disciplina {disciplina['NomeDisciplina']} com sucesso.")
+    
+    
 
 def matricular_aluno_em_turma():
     
