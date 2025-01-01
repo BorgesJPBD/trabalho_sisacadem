@@ -14,18 +14,18 @@ def cadastro_alunos():
     
     aluno = {
         "nome": nome,
+        "ra": ra,
         "matricula": matricula,
         "data_nascimento": data_nascimento,
         "sexo": sexo,
         "endereco": endereco,
         "telefone": telefone,
         "email": email,
-        "ra": ra,
+        
     }
     
     alunos.append(aluno)
-    print(f"Aluno cadastrado com sucesso: {aluno['nome']} - Matrícula: {aluno['matricula']}")
-    
+    print(f"Aluno cadastrado com sucesso: {aluno['nome']} - Matrícula: {aluno['matricula']} - RA: {aluno['ra']}")
 def gerar_ra():
     ra = random.randint(10000, 99999)  
     return ra 
@@ -37,7 +37,7 @@ def gerar_num_matricula():
 def visualizar_lista_alunos():
     print("Lista de alunos cadastrados:")
     for aluno in alunos:
-        print(f"{aluno['nome']} - Matrícula: {aluno['matricula']}")
+        print(f"{aluno['nome']} - RA: {aluno['ra']} - Matrícula: {aluno['matricula']}")
         
 def excluir_aluno():
     ra = int(input("Digite o RA do aluno a ser excluído: "))

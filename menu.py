@@ -1,6 +1,6 @@
-from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_aluno , alunos
-from cadastrar_professor import cadastro_professor, listar_professores , professores
-from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas ,  disciplinas
+from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_aluno, alunos
+from cadastrar_professor import cadastro_professor, listar_professores, professores
+from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas , disciplinas
 from cadastrar_turmas import cadastro_turma, listar_turmas, turmas 
 
 def exibir_menu():
@@ -81,35 +81,81 @@ def inserir_professor_em_disciplina():
 def matricular_aluno_em_turma():
     
     listar_turmas()
-    codigo_turma = int(input("Digite o código da turma: "))
-    turma = next((t for t in turmas if t['codigo_turma'] == codigo_turma), None)
+    codigos_turma = int(input("Digite o código da turma: "))
+    turma = next((t for t in turmas if t['codigo_turma'] == codigos_turma), None)
     if not turma:
         print("Turma não encontrada.")
         return
 
     visualizar_lista_alunos()
-    codigo_aluno = int(input("Digite o RA do aluno: "))
-    aluno = next((a for a in alunos if a['ra'] == codigo_aluno), None)
-    if not aluno:
-        print("Aluno não encontrado.")
-        return
+    codigos_alunos = input("Digite os números de RA dos alunos separados por vírgula:")
+    ra_alunos = [int(ra.strip()) for ra in codigos_alunos.split(",")]
+
+    for codigo_aluno in ra_alunos:
+        aluno = next((a for a in alunos if a['ra'] == codigo_aluno), None)  
+        if not aluno:
+            print(f"Aluno com RA {codigo_aluno} não encontrado.")
+            continue
 
     turma['alunos'].append(aluno)
     print(f"Aluno {aluno['nome']} matriculado na turma {turma['nome_turma']} com sucesso.")
 
 def excluir_professor():
     
-    print("Excluir professor ainda não implementado.")
+    listar_professores()
+    codigo_professor = int(input("Digite o código do professor a ser excluído: "))
+    professor_encontrado = False
+    for professor in professores:
+        if professor['id'] == codigo_professor:
+            professores.remove(professor)
+            professor_encontrado = True
+            print(f"Professor com código {codigo_professor} excluído com sucesso.")
+            break
+    if not professor_encontrado:
+        print("Professor não encontrado.")
 
 def excluir_disciplina():
     
-    print("Excluir disciplina ainda não implementado.")
+    listar_disciplinas()
+    codigo_disciplina = int(input("Digite o código da disciplina a ser excluída: "))
+    disciplina_encontrada = False
+    for disciplina in disciplinas:
+        if disciplina['código'] == codigo_disciplina:
+            disciplinas.remove(disciplina)
+            disciplina_encontrada = True
+            print(f"Disciplina com código {codigo_disciplina} excluída com sucesso.")
+            break
+    if not disciplina_encontrada:
+        print("Disciplina não encontrada.")
 
 def excluir_turma():
-    print("Excluir turma ainda não implementado.")
+    
+    listar_turmas()
+    codigo_turma = int(input("Digite o código da turma a ser excluída: "))
+    turma_encontrada = False
+    for turma in turmas:
+        if turma['codigo_turma'] == codigo_turma:
+            turmas.remove(turma)
+            turma_encontrada = True
+            print(f"Turma com código {codigo_turma} excluída com sucesso.")
+            break
+    if not turma_encontrada:
+        print("Turma não encontrada.")
+    
 
 def excluir_aluno():
-    print("Excluir aluno ainda não implementado.")
+    
+    visualizar_lista_alunos()
+    ra = int(input("Digite o RA do aluno a ser excluído: "))
+    aluno_encontrado = False
+    for aluno in alunos:
+        if aluno['ra'] == ra:
+            alunos.remove(aluno)
+            aluno_encontrado = True
+            print(f"Aluno com RA {ra} excluído com sucesso.")
+            break
+    if not aluno_encontrado:
+        print("Aluno não encontrado.")  
 
 def menu():
     while True:

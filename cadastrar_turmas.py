@@ -40,7 +40,7 @@ def cadastro_turma():
         print("Professor não encontrado.")
         return
     
-    codigos_alunos = input("Digite os códigos dos alunos separados por vírgula: ").split(',')
+    codigos_alunos = input("Digite o numero de RA de cada aluno separados por virgula: ").split(',')
     codigos_alunos = [int(codigo.strip()) for codigo in codigos_alunos]
     alunos_turma = buscar_alunos(codigos_alunos)
     if len(alunos_turma) != len(codigos_alunos):
