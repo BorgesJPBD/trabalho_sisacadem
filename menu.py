@@ -1,4 +1,4 @@
-from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_aluno
+from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_aluno , alunos
 from cadastrar_professor import cadastro_professor, listar_professores , professores
 from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas ,  disciplinas
 from cadastrar_turmas import cadastro_turma, listar_turmas, turmas 
