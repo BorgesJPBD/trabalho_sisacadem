@@ -4,6 +4,7 @@ alunos = []
 
 def cadastro_alunos():
     nome = input("Digite o nome do aluno: ")
+    ra = gerar_ra()
     matricula = gerar_num_matricula()
     data_nascimento = input("Digite a data de nascimento (dd/mm/aaaa): ")
     sexo = input("Digite o sexo (M para Masculino, F para Feminino): ").upper()
@@ -18,11 +19,16 @@ def cadastro_alunos():
         "sexo": sexo,
         "endereco": endereco,
         "telefone": telefone,
-        "email": email
+        "email": email,
+        "ra": ra,
     }
     
     alunos.append(aluno)
     print(f"Aluno cadastrado com sucesso: {aluno['nome']} - Matrícula: {aluno['matricula']}")
+    
+def gerar_ra():
+    ra = random.randint(10000, 99999)  
+    return ra 
 
 def gerar_num_matricula():
     matricula = random.randint(1,9999) 
@@ -34,13 +40,13 @@ def visualizar_lista_alunos():
         print(f"{aluno['nome']} - Matrícula: {aluno['matricula']}")
         
 def excluir_aluno():
-    matricula = int(input("Digite a matrícula do aluno a ser excluído: "))
+    ra = int(input("Digite o RA do aluno a ser excluído: "))
     aluno_encontrado = False
     for aluno in alunos:
-        if aluno['matricula'] == matricula:
+        if aluno['ra'] == ra:
             alunos.remove(aluno)
             aluno_encontrado = True
-            print(f"Aluno com matrícula {matricula} excluído com sucesso.")
+            print(f"Aluno com RA {ra} excluído com sucesso.")
             break
     if not aluno_encontrado:
         print("Aluno não encontrado.")        

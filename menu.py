@@ -1,7 +1,7 @@
 from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_aluno
 from cadastrar_professor import cadastro_professor, listar_professores , professores
 from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas ,  disciplinas
-from cadastrar_turmas import cadastro_turma, listar_turmas
+from cadastrar_turmas import cadastro_turma, listar_turmas, turmas 
 
 def exibir_menu():
     print("\nMenu Principal:")
@@ -80,7 +80,22 @@ def inserir_professor_em_disciplina():
 
 def matricular_aluno_em_turma():
     
-    print("Matricular aluno em turma ainda não implementado.")
+    listar_turmas()
+    codigo_turma = int(input("Digite o código da turma: "))
+    turma = next((t for t in turmas if t['codigo_turma'] == codigo_turma), None)
+    if not turma:
+        print("Turma não encontrada.")
+        return
+
+    visualizar_lista_alunos()
+    codigo_aluno = int(input("Digite o RA do aluno: "))
+    aluno = next((a for a in alunos if a['ra'] == codigo_aluno), None)
+    if not aluno:
+        print("Aluno não encontrado.")
+        return
+
+    turma['alunos'].append(aluno)
+    print(f"Aluno {aluno['nome']} matriculado na turma {turma['nome_turma']} com sucesso.")
 
 def excluir_professor():
     
@@ -92,6 +107,9 @@ def excluir_disciplina():
 
 def excluir_turma():
     print("Excluir turma ainda não implementado.")
+
+def excluir_aluno():
+    print("Excluir aluno ainda não implementado.")
 
 def menu():
     while True:

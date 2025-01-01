@@ -28,7 +28,7 @@ def cadastro_professor():
     }
 
     professores.append(professor)
-    print(f"Professor {nome} cadastrado com sucesso!")
+    print(f"Professor {nome} cadastrado com sucesso! ID: {id_professor}")
 
 def listar_professores():
     print("Lista de professores cadastrados:")
