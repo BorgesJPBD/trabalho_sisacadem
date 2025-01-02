@@ -2,6 +2,7 @@ from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_a
 from cadastrar_professor import cadastro_professor, listar_professores, professores
 from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas , disciplinas
 from cadastrar_turmas import cadastro_turma, listar_turmas, turmas 
+from tabulate import tabulate
 
 def exibir_menu():
     print("\nMenu Principal:")
@@ -156,6 +157,14 @@ def excluir_aluno():
             break
     if not aluno_encontrado:
         print("Aluno não encontrado.")  
+        
+def listar_disciplinas():
+    if disciplinas:
+        headers = ["Nome Disciplina", "Código", "Carga Curricular", "Professor"]  
+        table = [[disciplina["NomeDisciplina"], disciplina["código"], disciplina["CargaCurricular"], disciplina["ProfessorDocente"]] for disciplina in disciplinas]  
+        print(tabulate(table, headers, tablefmt="grid"))  
+    else:
+        print("Nenhuma disciplina cadastrada.")
 
 def menu():
     while True:
