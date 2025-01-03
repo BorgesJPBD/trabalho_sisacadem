@@ -1,4 +1,5 @@
 import random
+from tabulate import tabulate
 professores = []
 
 def gerar_id_professor():
@@ -29,11 +30,15 @@ def cadastro_professor():
 
     professores.append(professor)
     print(f"Professor {nome} cadastrado com sucesso! ID: {id_professor}")
+    headers = ["Nome", "ID", "Departamento"]
+    table = [[professor["nome"], professor["id"], professor["disciplina"]]]
+    print(tabulate(table, headers, tablefmt="grid"))
 
 def listar_professores():
-    print("Lista de professores cadastrados:")
-    for professor in professores:
-        print(f"ID: {professor['id']}, Nome: {professor['nome']}, Disciplina: {professor['disciplina']}, Data de Nascimento: {professor['data_nascimento']}, Sexo: {professor['sexo']}, Endereço: {professor['endereco']}, Telefone: {professor['telefone']}, Email: {professor['email']}")
-
-    
+    if professores:
+        headers = ["Nome", "ID", "Disciplina", "Data de Nascimento", "Sexo", "Endereço", "Telefone", "Email"]
+        table = [[professor["nome"], professor["id"], professor["disciplina"], professor["data_nascimento"], professor["sexo"], professor["endereco"], professor["telefone"], professor["email"]] for professor in professores]
+        print(tabulate(table, headers, tablefmt="grid"))
+    else:
+        print("Nenhum professor cadastrado.")
     

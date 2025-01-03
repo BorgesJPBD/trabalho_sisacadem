@@ -23,8 +23,9 @@ def exibir_menu():
         "Excluir Turma",
         "Sair"
     ]
-    for i, opcao in enumerate(opcoes, start=1):
-        print(f"{i}. {opcao}")
+    headers = ["Opção", "Descrição"]
+    table = [[i + 1, opcao] for i, opcao in enumerate(opcoes)]
+    print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[10, 30]))
 
 def executar_opcao(opcao):
     acoes = {
@@ -162,7 +163,7 @@ def listar_disciplinas():
     if disciplinas:
         headers = ["Nome Disciplina", "Código", "Carga Curricular", "Professor"]  
         table = [[disciplina["NomeDisciplina"], disciplina["código"], disciplina["CargaCurricular"], disciplina["ProfessorDocente"]] for disciplina in disciplinas]  
-        print(tabulate(table, headers, tablefmt="grid"))  
+        print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[20, 10, 15, 20], colalign=("left", "center", "center", "left"))) 
     else:
         print("Nenhuma disciplina cadastrada.")
 

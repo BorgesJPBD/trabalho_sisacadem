@@ -1,4 +1,5 @@
 import random
+from tabulate import tabulate
 
 alunos = []
 
@@ -25,7 +26,12 @@ def cadastro_alunos():
     }
     
     alunos.append(aluno)
-    print(f"Aluno cadastrado com sucesso: {aluno['nome']} - Matrícula: {aluno['matricula']} - RA: {aluno['ra']}")
+    headers = ["Nome", "RA", "Matrícula", "Data de Nascimento", "Sexo", "Endereço", "Telefone", "Email"]
+    table = [[aluno["nome"], aluno["ra"], aluno["matricula"], aluno["data_nascimento"], aluno["sexo"], aluno["endereco"], aluno["telefone"], aluno["email"]]]
+    print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[20, 10, 10, 15, 10, 30, 15, 25], colalign=("left", "center", "center", "center", "center", "left", "center", "left")))
+
+
+
 def gerar_ra():
     ra = random.randint(10000, 99999)  
     return ra 
@@ -35,9 +41,12 @@ def gerar_num_matricula():
     return matricula
 
 def visualizar_lista_alunos():
-    print("Lista de alunos cadastrados:")
-    for aluno in alunos:
-        print(f"{aluno['nome']} - RA: {aluno['ra']} - Matrícula: {aluno['matricula']}")
+    if alunos:
+        headers = ["Nome", "RA", "Matrícula", "Data de Nascimento", "Sexo", "Endereço", "Telefone", "Email"]
+        table = [[aluno["nome"], aluno["ra"], aluno["matricula"], aluno["data_nascimento"], aluno["sexo"], aluno["endereco"], aluno["telefone"], aluno["email"]] for aluno in alunos]
+        print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[20, 10, 10, 15, 10, 30, 15, 25], colalign=("left", "center", "center", "center", "center", "left", "center", "left")))
+    else:
+        print("Nenhum aluno cadastrado.")
         
 def excluir_aluno():
     ra = int(input("Digite o RA do aluno a ser excluído: "))
