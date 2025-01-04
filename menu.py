@@ -24,6 +24,8 @@ def exibir_menu():
         "Excluir Disciplina",
         "Excluir Turma",
         "Filtrar Professores por Disciplina",  
+        "Consultar Professores em Disciplinas",
+        "Consultar Disciplinas em Turmas",
         "Sair"
     ]
     headers = ["Opção", "Descrição"]
@@ -48,7 +50,9 @@ def executar_opcao(opcao):
         "14": excluir_disciplina,
         "15": excluir_turma,
         "16": filtrar_professores_por_disciplina,
-        "17": sair
+        "17": consultar_professores_em_disciplinas,
+        "18": consultar_disciplinas_em_turmas,
+        "19": sair
         
     }
 
@@ -219,15 +223,50 @@ def consultar_alunos_em_turma():
         table = [[aluno["RA"], aluno["Nome"]] for aluno in turma['alunos']]
         print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[10, 20]))
     else:
-        print("Nenhum aluno matriculado nesta turma.")     
+        print("Nenhum aluno matriculado nesta turma.")    
         
+        
+def consultar_professores_em_disciplinas():
+    listar_disciplinas()
+    codigo_disciplina = int(input("Digite o código da disciplina para consultar os professores: "))
+    disciplina = next((d for d in disciplinas if d['código'] == codigo_disciplina), None)
+    if not disciplina:
+        print("Disciplina não encontrada.")
+        return
 
+    professor = disciplina.get('ProfessorDocente')
+    if professor and isinstance(professor, dict):
+        headers = ["ID", "Nome", "Departamento"]
+        table = [[professor["Id"], professor["Nome"], professor["Departamento"]]]
+        print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[10, 20, 20]))
+    else:
+        print("Nenhum professor alocado nesta disciplina.")   
         
         
+        
+def consultar_disciplinas_em_turmas():
+    listar_turmas()
+    codigo_turma = int(input("Digite o código da turma para consultar as disciplinas: "))
+    turma = next((t for t in turmas if t['codigo_turma'] == codigo_turma), None)
+    if not turma:
+        print("Turma não encontrada.")
+        return
+
+    disciplina = turma.get('disciplina')
+    if disciplina and isinstance(disciplina, dict):
+        headers = ["Código", "Nome", "Carga Curricular"]
+        table = [[disciplina["código"], disciplina["NomeDisciplina"], disciplina["CargaCurricular"]]]
+        print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[10, 20, 20]))
+    else:
+        print("Nenhuma disciplina alocada nesta turma.")
+ 
+                 
 def menu():
     while True:
         exibir_menu()
         opcao = input("Escolha uma opção: ")
         executar_opcao(opcao)
         
-menu()
+if __name__ == "__main__":
+        
+    menu()
