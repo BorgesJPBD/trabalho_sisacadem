@@ -3,6 +3,7 @@ from cadastrar_professor import cadastro_professor, listar_professores, professo
 from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas , disciplinas
 from cadastrar_turmas import cadastro_turma, listar_turmas, turmas 
 from tabulate import tabulate
+import pandas as pd
 
 def exibir_menu():
     print("\nMenu Principal:")
@@ -17,10 +18,12 @@ def exibir_menu():
         "Listar Disciplinas",
         "Listar Turmas",
         "Matricular Aluno em Turma",
+        "Consultar Alunos em Turma",
         "Excluir Aluno",
         "Excluir Professor",
         "Excluir Disciplina",
         "Excluir Turma",
+        "Filtrar Professores por Disciplina",  
         "Sair"
     ]
     headers = ["Opção", "Descrição"]
@@ -39,11 +42,14 @@ def executar_opcao(opcao):
         "8": listar_disciplinas,
         "9": listar_turmas,
         "10": matricular_aluno_em_turma,
-        "11": excluir_aluno,
-        "12": excluir_professor,
-        "13": excluir_disciplina,
-        "14": excluir_turma,
-        "15": sair
+        "11": consultar_alunos_em_turma,
+        "12": excluir_aluno,
+        "13": excluir_professor,
+        "14": excluir_disciplina,
+        "15": excluir_turma,
+        "16": filtrar_professores_por_disciplina,
+        "17": sair
+        
     }
 
     acao = acoes.get(opcao)
@@ -70,13 +76,13 @@ def inserir_professor_em_disciplina():
 
     listar_professores()
     codigo_professor = int(input("Digite o código do professor: "))
-    professor = next((p for p in professores if p['id'] == codigo_professor), None)
+    professor = next((p for p in professores if p['Id'] == codigo_professor), None)
     if not professor:
         print("Professor não encontrado.")
         return
 
     disciplina['ProfessorDocente'] = professor
-    print(f"Professor {professor['nome']} inserido na disciplina {disciplina['NomeDisciplina']} com sucesso.")
+    print(f"Professor {professor['Nome']} inserido na disciplina {disciplina['NomeDisciplina']} com sucesso.")
     
     
 
@@ -90,17 +96,19 @@ def matricular_aluno_em_turma():
         return
 
     visualizar_lista_alunos()
-    codigos_alunos = input("Digite os números de RA dos alunos separados por vírgula:")
+    codigos_alunos = input("Digite os números de RA dos alunos separados por vírgula: ")
     ra_alunos = [int(ra.strip()) for ra in codigos_alunos.split(",")]
 
-    for codigo_aluno in ra_alunos:
-        aluno = next((a for a in alunos if a['ra'] == codigo_aluno), None)  
+    for ra in ra_alunos:
+        aluno = next((a for a in alunos if a['RA'] == ra), None)  
         if not aluno:
-            print(f"Aluno com RA {codigo_aluno} não encontrado.")
+            print(f"Aluno com RA {ra} não encontrado.")
             continue
 
-    turma['alunos'].append(aluno)
-    print(f"Aluno {aluno['nome']} matriculado na turma {turma['nome_turma']} com sucesso.")
+        turma['alunos'].append(aluno)
+        print(f"Aluno {aluno['Nome']} matriculado na turma {turma['nome_turma']} com sucesso.")  
+        
+        
 
 def excluir_professor():
     
@@ -108,7 +116,7 @@ def excluir_professor():
     codigo_professor = int(input("Digite o código do professor a ser excluído: "))
     professor_encontrado = False
     for professor in professores:
-        if professor['id'] == codigo_professor:
+        if professor['Id'] == codigo_professor:
             professores.remove(professor)
             professor_encontrado = True
             print(f"Professor com código {codigo_professor} excluído com sucesso.")
@@ -151,7 +159,7 @@ def excluir_aluno():
     ra = int(input("Digite o RA do aluno a ser excluído: "))
     aluno_encontrado = False
     for aluno in alunos:
-        if aluno['ra'] == ra:
+        if aluno['RA'] == ra:
             alunos.remove(aluno)
             aluno_encontrado = True
             print(f"Aluno com RA {ra} excluído com sucesso.")
@@ -166,7 +174,56 @@ def listar_disciplinas():
         print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[20, 10, 15, 20], colalign=("left", "center", "center", "left"))) 
     else:
         print("Nenhuma disciplina cadastrada.")
+        
+        
+def listar_turmas():
+    if turmas:
+        df = pd.DataFrame([{
+            'Código da Turma': turma['codigo_turma'],
+            'Nome da Turma': turma['nome_turma'],
+            'Disciplina': turma['disciplina']['NomeDisciplina'],
+            'Professor': turma['professor']['Nome'],
+            'Alunos': ', '.join([aluno['Nome'] for aluno in turma['alunos']])
+        } for turma in turmas])
+        print(df.to_string(index=False, justify='left'))
+    else:
+        print("Nenhuma turma cadastrada.")
 
+
+def filtrar_professores_por_disciplina():
+    listar_disciplinas()
+    codigo_disciplina = int(input("Digite o código da disciplina para filtrar os professores: "))
+    disciplina = next((d for d in disciplinas if d['código'] == codigo_disciplina), None)
+    if not disciplina:
+        print("Disciplina não encontrada.")
+        return
+
+    professor = disciplina.get('ProfessorDocente')
+    if professor:
+        headers = ["ID", "Nome", "Departamento"]
+        table = [[professor["Id"], professor["Nome"], professor["Departamento"]]]
+        print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[10, 20, 20]))
+    else:
+        print("Nenhum professor encontrado para esta disciplina.")
+        
+def consultar_alunos_em_turma():
+    listar_turmas()
+    codigo_turma = int(input("Digite o código da turma para consultar os alunos: "))
+    turma = next((t for t in turmas if t['codigo_turma'] == codigo_turma), None)
+    if not turma:
+        print("Turma não encontrada.")
+        return
+
+    if turma['alunos']:
+        headers = ["RA", "Nome"]
+        table = [[aluno["RA"], aluno["Nome"]] for aluno in turma['alunos']]
+        print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[10, 20]))
+    else:
+        print("Nenhum aluno matriculado nesta turma.")     
+        
+
+        
+        
 def menu():
     while True:
         exibir_menu()

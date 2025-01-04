@@ -1,34 +1,33 @@
 import random
-from tabulate import tabulate
+import pandas as pd
 
 alunos = []
 
 def cadastro_alunos():
-    nome = input("Digite o nome do aluno: ")
-    ra = gerar_ra()
-    matricula = gerar_num_matricula()
-    data_nascimento = input("Digite a data de nascimento (dd/mm/aaaa): ")
-    sexo = input("Digite o sexo (M para Masculino, F para Feminino): ").upper()
-    endereco = input("Digite o endereço completo: ")
-    telefone = input("Digite o telefone (apenas números com o DDD): ")
-    email = input("Digite o email: ")
+    Nome = input("Digite o nome do aluno: ")
+    RA = gerar_ra()
+    Matricula = gerar_num_matricula()
+    DataNascimento = input("Digite a data de nascimento (dd/mm/aaaa): ")
+    Sexo = input("Digite o sexo (M para Masculino, F para Feminino): ").upper()
+    Endereço = input("Digite o endereço completo: ")
+    Telefone = input("Digite o telefone (apenas números com o DDD): ")
+    Email = input("Digite o email: ")
     
     aluno = {
-        "nome": nome,
-        "ra": ra,
-        "matricula": matricula,
-        "data_nascimento": data_nascimento,
-        "sexo": sexo,
-        "endereco": endereco,
-        "telefone": telefone,
-        "email": email,
+        "Nome": Nome,
+        "RA": RA,
+        "Matricula": Matricula,
+        "DataNascimento": DataNascimento,
+        "Sexo": Sexo,
+        "Endereco": Endereço,
+        "Telefone": Telefone,
+        "Email": Email,
         
     }
     
     alunos.append(aluno)
-    headers = ["Nome", "RA", "Matrícula", "Data de Nascimento", "Sexo", "Endereço", "Telefone", "Email"]
-    table = [[aluno["nome"], aluno["ra"], aluno["matricula"], aluno["data_nascimento"], aluno["sexo"], aluno["endereco"], aluno["telefone"], aluno["email"]]]
-    print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[20, 10, 10, 15, 10, 30, 15, 25], colalign=("left", "center", "center", "center", "center", "left", "center", "left")))
+    df = pd.DataFrame([aluno])
+    print(df.to_string(index=False, justify='left'))
 
 
 
@@ -42,9 +41,8 @@ def gerar_num_matricula():
 
 def visualizar_lista_alunos():
     if alunos:
-        headers = ["Nome", "RA", "Matrícula", "Data de Nascimento", "Sexo", "Endereço", "Telefone", "Email"]
-        table = [[aluno["nome"], aluno["ra"], aluno["matricula"], aluno["data_nascimento"], aluno["sexo"], aluno["endereco"], aluno["telefone"], aluno["email"]] for aluno in alunos]
-        print(tabulate(table, headers, tablefmt="grid", maxcolwidths=[20, 10, 10, 15, 10, 30, 15, 25], colalign=("left", "center", "center", "center", "center", "left", "center", "left")))
+        df = pd.DataFrame(alunos)
+        print(df.to_string(index=False, justify='left'))
     else:
         print("Nenhum aluno cadastrado.")
         

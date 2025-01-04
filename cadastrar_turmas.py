@@ -1,4 +1,5 @@
 import random
+import pandas as pd
 from cadastrar_alunos import alunos 
 from cadastrar_professor import professores 
 from cadastrar_disciplina import disciplinas  
@@ -13,7 +14,7 @@ def buscar_disciplina(codigo_disciplina):
 
 def buscar_professor(codigo_professor):
     for professor in professores:
-        if professor['id'] == codigo_professor:
+        if professor['Id'] == codigo_professor:
             return professor
     return None
 
@@ -21,7 +22,7 @@ def buscar_alunos(codigos_alunos):
     alunos_encontrados = []
     for codigo in codigos_alunos:
         for aluno in alunos:
-            if aluno['matricula'] == codigo:
+            if aluno['RA'] == codigo:
                 alunos_encontrados.append(aluno)
                 break
     return alunos_encontrados
@@ -58,22 +59,25 @@ def cadastro_turma():
 
     turmas.append(turma)
     print(f"Turma cadastrada com sucesso! Código da turma: {codigo_turma}")
+    df = pd.DataFrame([{
+        'Código da Turma': turma['codigo_turma'],
+        'Nome da Turma': turma['nome_turma'],
+        'Disciplina': turma['disciplina']['NomeDisciplina'],
+        'Professor': turma['professor']['Nome'],
+        'Alunos': ', '.join([aluno['Nome'] for aluno in turma['alunos']])
+    }])
+    print(df.to_string(index=False, justify='left'))
 
 def listar_turmas():
-    print("Lista de turmas cadastradas:")
-    for turma in turmas:
-        print(f"Código da turma: {turma['codigo_turma']}, Nome da turma: {turma['nome_turma']}, Disciplina: {turma['disciplina']['NomeDisciplina']}, Professor: {turma['professor']['nome']}")
-        print("Alunos:")
-        for aluno in turma['alunos']:
-            print(f"  {aluno['nome']} - Matrícula: {aluno['matricula']}")
-
-if __name__ == "__main__":
+    if turmas:
+        df = pd.DataFrame([{
+            'Código da Turma': turma['codigo_turma'],
+            'Nome da Turma': turma['nome_turma'],
+            'Disciplina': turma['disciplina']['NomeDisciplina'],
+            'Professor': turma['professor']['Nome'],
+            'Alunos': ', '.join([aluno['nome'] for aluno in turma['alunos']])
+        } for turma in turmas])
+        print(df.to_string(index=False, justify='left'))
+    else:
+        print("Nenhuma turma cadastrada.")
     
-    while True:
-        cadastro_turma()
-        continuar = input("Deseja cadastrar outra turma? (s/n): ").strip().lower()
-        if continuar != 's':  
-            break
-    print("Turmas cadastradas")
-    
-    listar_turmas()
