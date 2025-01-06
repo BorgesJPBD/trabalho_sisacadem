@@ -1,9 +1,31 @@
+import json
 from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_aluno, alunos
 from cadastrar_professor import cadastro_professor, listar_professores, professores
 from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas , disciplinas
 from cadastrar_turmas import cadastro_turma, listar_turmas, turmas 
 from tabulate import tabulate
 import pandas as pd
+
+
+def carregar_dados(nome_arquivo):
+    try:
+        with open(nome_arquivo, 'r') as arquivo:
+            return json.load(arquivo)
+    except FileNotFoundError:
+        return []
+
+def salvar_dados(nome_arquivo, dados):
+    with open(nome_arquivo, 'w') as arquivo:
+        json.dump(dados, arquivo, indent=4)
+        
+        
+alunos = carregar_dados('alunos.json')
+professores = carregar_dados('professores.json')
+disciplinas = carregar_dados('disciplinas.json')
+turmas = carregar_dados('turmas.json')      
+
+
+
 
 def exibir_menu():
     print("\nMenu Principal:")
@@ -67,6 +89,10 @@ def executar_opcao(opcao):
 
 def sair():
     print("Saindo...")
+    salvar_dados('alunos.json', alunos)
+    salvar_dados('professores.json', professores)
+    salvar_dados('disciplinas.json', disciplinas)
+    salvar_dados('turmas.json', turmas)
     exit()
 
 def inserir_professor_em_disciplina():
