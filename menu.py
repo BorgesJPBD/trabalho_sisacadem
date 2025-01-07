@@ -1,29 +1,16 @@
-import json
 from cadastrar_alunos import cadastro_alunos, visualizar_lista_alunos, excluir_aluno, alunos
 from cadastrar_professor import cadastro_professor, listar_professores, professores
 from cadastrar_disciplina import cadastro_disciplina, listar_disciplinas , disciplinas
 from cadastrar_turmas import cadastro_turma, listar_turmas, turmas 
+from save import carregar_dados, salvar_dados
 from tabulate import tabulate
 import pandas as pd
 
-
-def carregar_dados(nome_arquivo):
-    try:
-        with open(nome_arquivo, 'r') as arquivo:
-            return json.load(arquivo)
-    except FileNotFoundError:
-        return []
-
-def salvar_dados(nome_arquivo, dados):
-    with open(nome_arquivo, 'w') as arquivo:
-        json.dump(dados, arquivo, indent=4)
         
-        
-alunos = carregar_dados('alunos.json')
-professores = carregar_dados('professores.json')
-disciplinas = carregar_dados('disciplinas.json')
-turmas = carregar_dados('turmas.json')      
-
+alunos = carregar_dados('alunos.pkl')
+professores = carregar_dados('professores.pkl')
+disciplinas = carregar_dados('disciplinas.pkl')
+turmas = carregar_dados('turmas.pkl')
 
 
 
@@ -113,6 +100,7 @@ def inserir_professor_em_disciplina():
 
     disciplina['ProfessorDocente'] = professor
     print(f"Professor {professor['Nome']} inserido na disciplina {disciplina['NomeDisciplina']} com sucesso.")
+    salvar_dados('disciplinas.pkl', disciplinas)
     
     
 

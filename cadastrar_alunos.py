@@ -1,7 +1,10 @@
 import random
 import pandas as pd
+from save import carregar_dados, salvar_dados
 
-alunos = []
+            
+alunos = carregar_dados('alunos.pkl')
+
 
 def cadastro_alunos():
     Nome = input("Digite o nome do aluno: ")
@@ -26,8 +29,8 @@ def cadastro_alunos():
     }
     
     alunos.append(aluno)
-    df = pd.DataFrame([aluno])
-    print(df.to_string(index=False, justify='left'))
+    salvar_dados('alunos.pkl', alunos)  
+    print(f"Aluno {Nome} cadastrado com sucesso!")
 
 
 
@@ -56,7 +59,9 @@ def excluir_aluno():
             print(f"Aluno com RA {ra} excluído com sucesso.")
             break
     if not aluno_encontrado:
-        print("Aluno não encontrado.")        
+       if not aluno_encontrado:
+        print("Aluno não encontrado.")
+    salvar_dados('alunos.pkl', alunos)    
     
 
 

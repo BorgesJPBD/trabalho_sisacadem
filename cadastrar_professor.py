@@ -1,6 +1,9 @@
 import random
 import pandas as pd 
-professores = []
+from save import carregar_dados, salvar_dados
+
+
+professores = carregar_dados('professores.pkl')
 
 def gerar_id_professor():
    
@@ -29,13 +32,30 @@ def cadastro_professor():
     }
 
     professores.append(professor)
-    df = pd.DataFrame([professor])
-    print(df.to_string(index=False, justify='left'))
+    salvar_dados('professores.pkl', professores)
+    print(f"Professor {Nome} cadastrado com sucesso!")
 
 def listar_professores():
     if professores:
         df = pd.DataFrame(professores)
-        print(df.to_string(index=False, justify='left'))
+        print(df.to_string(index=False))
     else:
         print("Nenhum professor cadastrado.")
+        
+            
+def excluir_professor():
+    listar_professores()
+    codigo_professor = int(input("Digite o código do professor a ser excluído: "))
+    professor_encontrado = False
+    for professor in professores:
+        if professor['Id'] == codigo_professor:
+            professores.remove(professor)
+            professor_encontrado = True
+            print(f"Professor com código {codigo_professor} excluído com sucesso.")
+            break
+        
+        
+    if not professor_encontrado:
+        print("Professor não encontrado.")
+    salvar_dados('professores.pkl', professores)
     

@@ -1,7 +1,8 @@
 import random  
 from tabulate import tabulate
+from save import carregar_dados, salvar_dados
 
-disciplinas = []  
+disciplinas = carregar_dados('disciplinas.pkl')
 
 def listar_disciplinas():
     if disciplinas:
@@ -10,6 +11,7 @@ def listar_disciplinas():
         print(tabulate(table, headers, tablefmt="grid"))  
     else:
         print("Nenhuma disciplina cadastrada.")
+        
 
 def cadastro_disciplina():
     NomeDisciplina = input("Escreva o nome da disciplina: ")
@@ -26,17 +28,10 @@ def cadastro_disciplina():
     }
 
     disciplinas.append(disciplina)
+    salvar_dados('disciplinas.pkl', disciplinas)  
     print(f"Disciplina cadastrada com sucesso! Código gerado: {código}")
-    headers = ["Nome Disciplina", "Código Disciplina", "Carga Curricular", "Professor"]
-    table = [[disciplina["NomeDisciplina"], disciplina["código"], disciplina["CargaCurricular"], disciplina["ProfessorDocente"]]]
-    print(tabulate(table, headers, tablefmt="grid"))
+    listar_disciplinas()
     
     
-def listar_disciplinas():
-    print("Lista de disciplinas cadastradas:")
-    for disciplina in disciplinas:
-        print(f"Nome: {disciplina['NomeDisciplina']}, Código: {disciplina['código']}, Carga Curricular: {disciplina['CargaCurricular']}, Professor: {disciplina['ProfessorDocente']}")
-        
-listar_disciplinas()
 
 
