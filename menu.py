@@ -76,10 +76,10 @@ def executar_opcao(opcao):
 
 def sair():
     print("Saindo...")
-    salvar_dados('alunos.json', alunos)
-    salvar_dados('professores.json', professores)
-    salvar_dados('disciplinas.json', disciplinas)
-    salvar_dados('turmas.json', turmas)
+    salvar_dados('alunos.pkl', alunos)
+    salvar_dados('professores.pkl', professores)
+    salvar_dados('disciplinas.pkl', disciplinas)
+    salvar_dados('turmas.pkl', turmas)
     exit()
 
 def inserir_professor_em_disciplina():
